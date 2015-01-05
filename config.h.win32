@@ -92,3 +92,7 @@
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
+
+#define HAVE_DECL__ISNAN 1
+
+#define HAVE_DECL__FINITE 1
