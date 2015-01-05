@@ -53,3 +53,10 @@
 *.o
 /libjson-c.la
 /libjson.la
+/ipch/*
+*.sdf
+*.opensdf
+*.vcxproj.user
+Debug
+r
+*.suo
