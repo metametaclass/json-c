@@ -642,11 +642,12 @@ struct json_object* json_object_new_double(double d)
 
 struct json_object* json_object_new_double_s(double d, const char *ds)
 {
+	char *new_ds;
 	struct json_object *jso = json_object_new_double(d);
 	if (!jso)
 		return NULL;
 
-	char *new_ds = strdup(ds);
+	new_ds = strdup(ds);
 	if (!new_ds)
 	{
 		json_object_generic_delete(jso);
@@ -661,8 +662,8 @@ struct json_object* json_object_new_double_s(double d, const char *ds)
 int json_object_userdata_to_json_string(struct json_object *jso,
 	struct printbuf *pb, int level, int flags)
 {
-	int userdata_len = strlen(jso->_userdata);
-	printbuf_memappend(pb, jso->_userdata, userdata_len);
+	int userdata_len = strlen((char*)jso->_userdata);
+	printbuf_memappend(pb, (char*)jso->_userdata, userdata_len);
 	return userdata_len;
 }
 

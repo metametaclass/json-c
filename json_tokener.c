@@ -30,6 +30,7 @@
 #include "json_object.h"
 #include "json_tokener.h"
 #include "json_util.h"
+#include "math_compat.h"
 
 #ifdef HAVE_LOCALE_H
 #include <locale.h>
@@ -234,6 +235,7 @@ struct json_object* json_tokener_parse_ex(struct json_tokener *tok,
 {
   struct json_object *obj = NULL;
   char c = '\1';
+  char *infbuf;
 #ifdef HAVE_SETLOCALE
   char *oldlocale=NULL, *tmplocale;
 
@@ -358,7 +360,7 @@ struct json_object* json_tokener_parse_ex(struct json_tokener *tok,
 
 	printbuf_memappend_fast(tok->pb, &c, 1);
 	size_inf = json_min(tok->st_pos+1, json_inf_str_len);
-	char *infbuf = tok->pb->buf;
+	infbuf = tok->pb->buf;
 	if (*infbuf == '-')
 	{
 		infbuf++;
