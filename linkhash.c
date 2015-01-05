@@ -24,6 +24,11 @@
 #include "random_seed.h"
 #include "linkhash.h"
 
+#if defined _MSC_VER
+#include <windows.h>
+#endif
+
+
 void lh_abort(const char *msg, ...)
 {
 	va_list ap;
@@ -399,7 +404,7 @@ static uint32_t hashlittle( const void *key, size_t length, uint32_t initval)
 
 unsigned long lh_char_hash(const void *k)
 {
-	static volatile int random_seed = -1;
+	static volatile long random_seed = -1;
 
 	if (random_seed == -1) {
 		int seed;

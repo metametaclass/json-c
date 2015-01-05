@@ -3,6 +3,7 @@
  * Also checks the json_object_get_type and json_object_is_type functions.
  */
 
+#include "stdafx.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -17,7 +18,7 @@ static void getit(struct json_object *new_obj, const char *field);
 static void checktype_header(void);
 static void checktype(struct json_object *new_obj, const char *field);
 
-int main(int argc, char **argv)
+int main_test_cast()
 {
 	const char *input = "{\n\
 		\"string_of_digits\": \"123\",\n\
@@ -65,9 +66,14 @@ int main(int argc, char **argv)
 
 static void getit(struct json_object *new_obj, const char *field)
 {
-	struct json_object *o = json_object_object_get(new_obj, field);
+	//struct json_object *o = json_object_object_get(new_obj, field);
+    struct json_object *o;
+    json_bool rc;
+    enum json_type o_type;
 
-	enum json_type o_type = json_object_get_type(o);
+    rc = json_object_object_get_ex(new_obj, field, &o);    
+
+	o_type = json_object_get_type(o);
 	printf("new_obj.%s json_object_get_type()=%s\n", field,
 	       json_type_to_name(o_type));
 	printf("new_obj.%s json_object_get_int()=%d\n", field,
@@ -93,7 +99,14 @@ static void checktype_header()
 }
 static void checktype(struct json_object *new_obj, const char *field)
 {
-	struct json_object *o = field ? json_object_object_get(new_obj, field) : new_obj;
+	struct json_object *o;
+    json_bool rc;
+    if(field){
+        rc = json_object_object_get_ex(new_obj, field, &o);
+    }else{
+        o = new_obj;//json_object_get(new_obj)        
+    }
+    //rc = field ? json_object_object_get(new_obj, field) : new_obj;
 	printf("new_obj%s%-18s: %d,%d,%d,%d,%d,%d,%d\n",
 		field ? "." : " ", field ? field : "",
 		json_object_is_type(o, json_type_null),

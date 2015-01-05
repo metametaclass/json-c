@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
@@ -11,7 +12,7 @@ static void test_basic_parse(void);
 static void test_verbose_parse(void);
 static void test_incremental_parse(void);
 
-int main(int argc, char **argv)
+int main_test_parse()
 {
 	MC_SET_DEBUG(1);
 
@@ -21,6 +22,7 @@ int main(int argc, char **argv)
 	printf("==================================\n");
 	test_incremental_parse();
 	printf("==================================\n");
+    return 0;
 }
 
 static void test_basic_parse()
